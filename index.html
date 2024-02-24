@@ -8,19 +8,30 @@
    
 
 <title>Mextube</title>
-    <style>
-        @media (orientation: landscape) {
-            body {
-                transform: rotate(90deg);
-                transform-origin: left top;
-                width: 100vh;
-                overflow-x: hidden;
-                position: absolute;
-                top: 0;
-                left: 0;
-            }
-        }
-    </style>
+   /* Landscape orientation */
+@media screen and (orientation: landscape) {
+    /* Apply styles to the body or specific content elements */
+    body {
+        transform: rotate(90deg);
+        transform-origin: left top;
+        width: 100vh;
+        overflow-x: hidden;
+        position: fixed;
+        top: 0;
+        left: 0;
+    }
+}
+
+/* Portrait orientation */
+@media screen and (orientation: portrait) {
+    /* Apply styles to the body or specific content elements */
+    body {
+        transform: none;
+        width: 100vw;
+        overflow-x: auto;
+        position: static;
+    }
+}
 
 
 
