@@ -9,34 +9,20 @@
 
 <title>Mextube</title>
     <style>
-   /* Landscape orientation */
-@media screen and (orientation: landscape) {
-    /* Apply styles to the body or specific content elements */
-    body {
-        transform: rotate(90deg);
-        transform-origin: left top;
-        width: 100vh;
-        overflow-x: hidden;
-        position: fixed;
-        top: 0;
-        left: 0;
-    }
-}
-
-/* Portrait orientation */
-@media screen and (orientation: portrait) {
-    /* Apply styles to the body or specific content elements */
-    body {
-        transform: none;
-        width: 100vw;
-        overflow-x: auto;
-        position: static;
-    }
-}
-
-
-</style>
-
+        /* Lock orientation to portrait */
+        @media screen and (orientation: landscape) {
+            body.locked {
+                transform: rotate(90deg);
+                transform-origin: center;
+                width: 100vh;
+                height: 100vw;
+                overflow: hidden;
+                position: fixed;
+                top: 0;
+                left: 0;
+            }
+        }
+    </style>
 
 
 
@@ -639,7 +625,7 @@
 
         </style>
           
-       <body> 
+       <body class="locked"> 
                   
                 
     </main> 
@@ -1440,6 +1426,13 @@ function hideAllDropdowns() {
     
     </body> 
   </body>
+          <script>
+        // JavaScript to prevent scrolling when in landscape mode
+        window.addEventListener("orientationchange", function() {
+            var locked = window.orientation === 90 || window.orientation === -90;
+            document.body.classList.toggle("locked", locked);
+        }, false);
+    </script>
         </body>
 </html>  
 
