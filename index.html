@@ -2,27 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0, orientation=portrait">
+
     <link rel="stylesheet" href="styles.css">
     <link rel="icon" href="mextube.png"  type="image/png">
    
 
 <title>Mextube</title>
-    <style>
-        /* Lock orientation to portrait */
-        @media screen and (orientation: landscape) {
-            body.locked {
-                transform: rotate(90deg);
-                transform-origin: center;
-                width: 100vh;
-                height: 100vw;
-                overflow: hidden;
-                position: fixed;
-                top: 0;
-                left: 0;
-            }
-        }
-    </style>
+
 
 
 
@@ -625,7 +612,7 @@
 
         </style>
           
-       <body class="locked"> 
+       <body> 
                   
                 
     </main> 
@@ -1426,13 +1413,6 @@ function hideAllDropdowns() {
     
     </body> 
   </body>
-          <script>
-        // JavaScript to prevent scrolling when in landscape mode
-        window.addEventListener("orientationchange", function() {
-            var locked = window.orientation === 90 || window.orientation === -90;
-            document.body.classList.toggle("locked", locked);
-        }, false);
-    </script>
         </body>
 </html>  
 
