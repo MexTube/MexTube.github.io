@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YouTube-like Thumbnail</title>
+  <style>
+   .thumbnails {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.thumbnail {
+  width: 23%; /* Adjust based on the desired number of thumbnails per row */
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.thumbnail h3 {
+  display: flex;
+  align-items: center;
+}
+
+.thumbnail img {
+  width: 100%;
+  height: auto;
+}
+
+.channel-logo {
+  margin-right: 5px; /* Adjust spacing between channel logo and video title */
+}
+
+.options-button {
+  margin-left: auto; /* Push option button to the right */
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  color: #333;
+  font-size: 20px;
+}
+
+.options-dropdown {
+  display: none;
+  flex-direction: column;
+  position: absolute;
+  bottom: -30px;
+  right: 0;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 5px;
+}
+
+.options-dropdown button {
+  margin-bottom: 5px;
+}
+
+@media only screen and (max-width: 768px) {
+  .thumbnails {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .thumbnail {
+    width: 100%; /* Each thumbnail takes the full width */
+  }
+}
+
+  </style>
+</head>
+<body>
+
+  <div class="thumbnails">
+    <div class="thumbnail" data-category="hr" data-url="play1.html">
+      <img class="sm" src="s" alt="Website 1" onclick="loadWebsite('play1.html'); showContent(); hideContent2();" title="Watch ">
+      <h3>
+        The nun 2sdsd
+        <img class="channel-logo" src="" alt="Channel Logo">
+        <button class="options-button" onclick="toggleOptionsDropdown(this)">...</button>
+        <div class="options-dropdown">
+          <button onclick="shareVideo(this)">Share</button>
+          <button onclick="addToWatchLater(this)">Watch Later</button>
+        </div>
+      </h3>
+    </div>
+    <!-- Add more thumbnails here -->
+  </div>
+  
+  
+  <script>
+    function toggleOptionsDropdown(button) {
+      const dropdown = button.parentElement.querySelector('.options-dropdown');
+      dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+    }
+  
+    function shareVideo(button) {
+      var thumbnail = button.closest('.thumbnail');
+      var title = thumbnail.querySelector('h3').textContent.trim();
+      var url = thumbnail.getAttribute('data-url') || ""; // Default to empty string if data-url is undefined
+  
+      var modifiedUrl = "https://aretubex.github.io/in/" + url;
+  
+      // Create a temporary textarea to copy the modified URL
+      var tempTextArea = document.createElement('textarea');
+      tempTextArea.value = modifiedUrl;
+      document.body.appendChild(tempTextArea);
+  
+      // Select and copy the modified URL
+      tempTextArea.select();
+      document.execCommand('copy');
+  
+      // Remove the temporary textarea
+      document.body.removeChild(tempTextArea);
+  
+      alert('Link copied to clipboard: ' + modifiedUrl);
+    }
+  
+    // ... (your other functions)
+  
+    function addToWatchLater(button) {
+      // Locate the parent thumbnail element
+      var thumbnail = button.closest('.thumbnail');
+  
+      // Extract title, image source, and URL from the thumbnail
+      var title = thumbnail.querySelector('h3').textContent.trim();
+      var imageSrc = thumbnail.querySelector('img').src;
+      var url = thumbnail.getAttribute('data-url') || ""; // Default to empty string if data-url is undefined
+  
+      // Check if the title is already in the watch later list
+      var watchLaterList = JSON.parse(localStorage.getItem('watchLater')) || [];
+      var exists = watchLaterList.some(item => item.title === title);
+  
+      if (!exists) {
+        watchLaterList.push({ title: title, imageSrc: imageSrc, url: url });
+        localStorage.setItem('watchLater', JSON.stringify(watchLaterList));
+        alert('Added to Watch Later');
+      } else {
+        alert('This movie is already in Watch Later');
+      }
+    }
+  </script>
+
+</body>
+</html>

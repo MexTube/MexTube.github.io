@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="Flixtube icon34.png" type="image/png">
+    <title>Watch Later List</title>
+
+    <style>
+        #fullscreen-search-button {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            font-size: 20px;
+            cursor: pointer;
+            background-color: transparent;
+            border: none;
+            outline: none;
+        }
+
+        #fullscreen-search-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: black;
+            z-index: 9999;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: flex-start;
+        }
+
+        #fullscreen-search-bar {
+            padding: 10px;
+            width: 80%;
+            margin-bottom: 20px;
+        }
+
+        #fullscreen-titles-container {
+            display: flex;
+            flex-direction: column;
+            max-height: 100%;
+            overflow-y: auto;
+            color: #fff;
+            font-size: 20px;
+            width: 100%;
+        }
+
+        #fullscreen-titles-container div {
+            margin-bottom: 30px;
+            
+        }
+      
+        #search-results-message {
+            color: #000000;
+            margin-top: 10px;
+        }
+    </style>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 20px;
+            color: #fff;
+        }
+
+        #watchLaterListContainer {
+            width: 100%;
+        }
+
+        .watch-later-thumbnail {
+            cursor: pointer;
+            text-align: center;
+            background-color: #171324;
+            color: #fff3f3;
+            margin-top: 3px;
+            padding: 1px;
+            border-radius: 7px;
+            position: relative;
+        }
+
+        .watch-later-thumbnail:hover {
+            background-color: #555;
+        }
+
+        .watch-later-thumbnail img {
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .watch-later-thumbnail h3 {
+            margin: 10px;
+            font-size: 14px;
+        }
+
+        .options-container {
+            display: none;
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            background-color: #222;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            z-index: 1;
+        }
+
+        .watch-later-thumbnail:hover .options-container {
+            display: flex;
+        }
+
+        .options-container button {
+            background-color: #fff3f3;
+            color: #fc0a0a;
+            font-size: 16px;
+            margin: 5px;
+            padding: 5px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .options-container button:hover {
+            background-color: #e63900;
+        }
+
+        .foldable-options {
+            position: absolute;
+            top: 0;
+            right: 0;
+            cursor: pointer;
+            z-index: 2;
+        }
+
+        .foldable-options:hover .options-container {
+            display: flex;
+        }
+
+       
+
+        .gh {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin: 10px;
+        }
+
+        .gh:hover {
+            background-color: #0056b3;
+        }
+    </style>
+   <script>
+    function showContent() {
+        // Add your logic for showing content here
+        console.log('Content shown!');
+    }
+
+    function hideContent2() {
+        // Add your logic for hiding content here
+        console.log('Content hidden!');
+    }
+
+    function playWatchLaterThumbnail(url) {
+        // Call the showContent() function when playing the thumbnail
+        showContent();
+        renderWebsiteIframe(url);
+    }
+</script>
+     <script>
+        // Your existing scripts
+
+        function removeAllFromWatchLater() {
+            localStorage.removeItem('watchLater');
+            renderWatchLaterList([]);
+            renderWebsiteIframe(null); // Clear iframe when all items are removed
+        }
+    </script>
+</head>
+
+<body>
+
+    <button id="fullscreen-search-button" onclick="toggleFullscreenSearch()">🔍</button>
+
+    <div id="fullscreen-search-container">
+        <input type="text" id="fullscreen-search-bar" oninput="filterTitlesFullscreen()">
+        <div id="fullscreen-titles-container"></div>
+        <button class="th" onclick="cancelSearch()">Cancel</button>
+        <div id="search-results-message"></div>
+    </div>
+
+<style>
+    .th {
+        background-color: #fc0a0a;
+    }
+</style>
+<script>
+    function showContent() {
+      var content = document.getElementById('websiteIframeContainer');
+      content.style.display = 'block';
+    }
+      function  hideContent() {
+      var content = document.getElementById('websiteIframeContainer');
+      content.style.display = 'none';
+    }
+  </script>
+    <h1>Watch Later List</h1>
+
+    <div id="watchLaterListContainer"></div>
+    <div id="websiteIframeContainer"></div>
+    <button class="gh" onclick="removeAllFromWatchLater()">Remove All from Watch Later</button>
+    <script>
+        /* ... your existing scripts ... */
+
+        function toggleFullscreenSearch() {
+            var fullscreenSearchContainer = document.getElementById('fullscreen-search-container');
+            fullscreenSearchContainer.style.display = (fullscreenSearchContainer.style.display === 'none' || fullscreenSearchContainer.style.display === '') ? 'flex' : 'none';
+
+            var fullscreenTitlesContainer = document.getElementById('fullscreen-titles-container');
+            fullscreenTitlesContainer.innerHTML = '';
+        }
+
+        function filterTitlesFullscreen() {
+            var searchTerm = document.getElementById('fullscreen-search-bar').value.toLowerCase();
+            var thumbnails = document.querySelectorAll('.watch-later-thumbnail');
+            var matchingTitles = [];
+
+            thumbnails.forEach(function (thumbnail) {
+                var title = thumbnail.querySelector('h3').textContent.toLowerCase();
+                if (title.includes(searchTerm) && !matchingTitles.includes(title)) {
+                    matchingTitles.push(title);
+                }
+            });
+
+            displayMatchingTitlesFullscreen(matchingTitles);
+        }
+
+        function displayMatchingTitlesFullscreen(titles) {
+            var fullscreenTitlesContainer = document.getElementById('fullscreen-titles-container');
+            fullscreenTitlesContainer.innerHTML = '';
+
+            titles.forEach(function (title) {
+                var titleElement = document.createElement('div');
+                titleElement.innerHTML = `🔍 ${title}`;
+                titleElement.addEventListener('click', function () {
+                    filterCategoryByTitle(title);
+                    toggleFullscreenSearch();
+                });
+                fullscreenTitlesContainer.appendChild(titleElement);
+            });
+        }
+
+        function filterCategoryByTitle(title) {
+            var thumbnails = document.querySelectorAll('.watch-later-thumbnail');
+
+            thumbnails.forEach(function (thumbnail) {
+                var thumbnailTitle = thumbnail.querySelector('h3').textContent.toLowerCase();
+                if (thumbnailTitle === title) {
+                    thumbnail.style.display = 'block';
+                } else {
+                    thumbnail.style.display = 'none';
+                }
+            });
+        }
+    </script>
+
+<script>
+    /* ... your existing scripts ... */
+
+    function cancelSearch() {
+        // Clear the search bar
+        document.getElementById('fullscreen-search-bar').value = '';
+
+        // Hide the search container
+        toggleFullscreenSearch();
+    }
+
+    function performSearch() {
+        var searchTerm = document.getElementById('fullscreen-search-bar').value.toLowerCase();
+        var thumbnails = document.querySelectorAll('.watch-later-thumbnail');
+        var matchingTitles = [];
+
+        thumbnails.forEach(function (thumbnail) {
+            var title = thumbnail.querySelector('h3').textContent.toLowerCase();
+            if (title.includes(searchTerm) && !matchingTitles.includes(title)) {
+                matchingTitles.push(title);
+            }
+        });
+
+        if (matchingTitles.length > 0) {
+            filterCategoryByTitles(matchingTitles);
+        } else {
+            displayNoResultsMessage();
+        }
+
+        // You can choose to keep or remove the following line based on your needs
+        // toggleFullscreenSearch();
+    }
+
+    function displayNoResultsMessage() {
+        var searchResultsMessage = document.getElementById('search-results-message');
+        searchResultsMessage.textContent = 'No matching content found.';
+    }
+</script>
+
+    <script>
+        function removeFromWatchLater(title) {
+            var watchLaterList = JSON.parse(localStorage.getItem('watchLater')) || [];
+            var updatedWatchLaterList = watchLaterList.filter(item => item.title !== title);
+
+            localStorage.setItem('watchLater', JSON.stringify(updatedWatchLaterList));
+            renderWatchLaterList(updatedWatchLaterList);
+            renderWebsiteIframe(null); // Clear iframe when an item is removed
+        }
+
+        function playWatchLaterThumbnail(url) {
+            // Call the showContent() function when playing the thumbnail
+            showContent();
+            renderWebsiteIframe(url);
+        }
+
+        function removeAllFromWatchLater() {
+            localStorage.removeItem('watchLater');
+            renderWatchLaterList([]);
+            renderWebsiteIframe(null); // Clear iframe when all items are removed
+        }
+
+        function shareLink(title, url) {
+            var modifiedUrl = "https://MexTube.github.io/" + url;
+
+            // Create a temporary textarea to copy the modified URL
+            var tempTextArea = document.createElement('textarea');
+            tempTextArea.value = modifiedUrl;
+            document.body.appendChild(tempTextArea);
+
+            // Select and copy the modified URL
+            tempTextArea.select();
+            document.execCommand('copy');
+
+            // Remove the temporary textarea
+            document.body.removeChild(tempTextArea);
+
+            alert('Link copied to clipboard: ' + modifiedUrl);
+        }
+
+        function toggleOptions(optionsContainer) {
+            optionsContainer.style.display = optionsContainer.style.display === 'none' ? 'flex' : 'none';
+        }
+
+        function handleOptionClick(event) {
+            // Check if the clicked element is a button within an options container
+            var target = event.target;
+            if (target.tagName === 'BUTTON' && target.closest('.options-container')) {
+                var action = target.getAttribute('data-action');
+                var title = target.getAttribute('data-title');
+                var url = target.getAttribute('data-url');
+
+                if (action === 'remove') {
+                    removeFromWatchLater(title);
+                } else if (action === 'share') {
+                    shareLink(title, url);
+                }
+            }
+        }
+
+         // Your existing scripts
+
+    // Function to render watch later list
+    function renderWatchLaterList(watchLaterList) {
+        var watchLaterListContainer = document.getElementById('watchLaterListContainer');
+        watchLaterListContainer.innerHTML = '';
+
+        watchLaterList.forEach(function (item) {
+            var watchLaterThumbnail = document.createElement('div');
+            watchLaterThumbnail.className = 'watch-later-thumbnail';
+            watchLaterThumbnail.innerHTML = `
+                <div class="foldable-options" onclick="toggleOptions(this.nextElementSibling)">
+                    <div class="options-container">
+                        <button data-action="remove" data-title="${item.title}">Remove</button>
+                        <button data-action="share" data-title="${item.title}" data-url="${item.url}">Share Link</button>
+                    </div>
+                </div>
+                <img src="${item.imageSrc}" alt="${item.title}" onclick="playWatchLaterThumbnail('${item.url}')">
+                <h3>${item.title}</h3>
+            `;
+            watchLaterListContainer.appendChild(watchLaterThumbnail);
+        });
+    }
+        function renderWebsiteIframe(url) {
+            var websiteIframeContainer = document.getElementById('websiteIframeContainer');
+            websiteIframeContainer.innerHTML = '';
+
+            if (url) {
+                var websiteIframe = document.createElement('iframe');
+                websiteIframe.src = url;
+                websiteIframe.width = '100%';
+                websiteIframe.height = '100%'; // Adjust the height as needed
+                websiteIframeContainer.appendChild(websiteIframe);
+            }
+        }
+
+        // Retrieve watch later list from localStorage
+        var watchLaterList = JSON.parse(localStorage.getItem('watchLater')) || [];
+
+        // Display watch later list on the page
+        renderWatchLaterList(watchLaterList);
+
+        // Add click event listener to the document for delegation
+        document.addEventListener('click', handleOptionClick);
+    
+    </script>
+
+    <!-- Include your common scripts and stylesheets here -->
+
+</body>
+
+</html>
+
+
+<script>
+    // Your existing scripts
+
+    // Function to add to watch later list
+  
+</script>
+
+<script>
+ 
+</script>
+
+<!-- Ensure to call renderWatchLaterList to display the watch later list -->
+<script>
+    // Your existing scripts
+
+    // Retrieve watch later list from localStorage
+   
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
