@@ -9,17 +9,18 @@
 
 <title>Mextube</title>
     <style>
-@media (orientation: landscape) {
-    /* Prevent rotation for landscape orientation */
-    body {
-        transform: rotate(0deg);
-        transform-origin: center;
-    }
-}
-
-
-</style>
-
+        @media (orientation: landscape) {
+            body {
+                transform: rotate(90deg);
+                transform-origin: left top;
+                width: 100vh;
+                overflow-x: hidden;
+                position: absolute;
+                top: 0;
+                left: 0;
+            }
+        }
+    </style>
 
 
 
@@ -626,7 +627,7 @@
 
         </style>
           
-       
+       <body> 
                   
                 
     </main> 
@@ -1427,6 +1428,7 @@ function hideAllDropdowns() {
     
     </body> 
   </body>
+        </body>
 </html>  
 
 
