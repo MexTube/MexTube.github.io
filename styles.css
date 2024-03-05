@@ -98,15 +98,16 @@ main {
 
  
 
-    #website-iframe {
-        width: 100%;
-        height: 100%;
-        border: none;
-       position: fixed;
-      
-    }
-    
-
+   .website-container {
+    margin-left:0%;
+  }
+  
+  #website-iframe {
+    width: 100%;
+    height: 100vh; /* Adjust the height as needed */
+    border: none;
+    /* position: relative; */ /* You may remove this line */
+  }
 
 
 
