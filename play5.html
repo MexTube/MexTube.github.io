@@ -126,17 +126,25 @@
     </video>
     
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+ document.addEventListener('DOMContentLoaded', function() {
         var videoPlayer = document.getElementById('my-video');
         var htkkLink = document.createElement('a');
         htkkLink.className = 'htkk';
         htkkLink.href = 'index.html';
         var htkkImg = document.createElement('img');
-        htkkImg.src = 'Untitle1.png';
-       
-     
+        htkkImg.src = 'https://maxtube.dynet.com/Untitle1.png';
+        htkkImg.style.maxHeight = '30px';
+        htkkImg.style.maxWidth = '30px';
         htkkLink.appendChild(htkkImg);
         videoPlayer.appendChild(htkkLink);
+        
+        document.addEventListener('fullscreenchange', function() {
+            if (document.fullscreenElement) {
+                htkkLink.style.display = 'none';
+            } else {
+                htkkLink.style.display = 'block';
+            }
+        });
     });
     </script>
 <style>
