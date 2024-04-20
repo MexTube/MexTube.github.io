@@ -107,25 +107,38 @@
  
     </div>
     
-    <!-- Your video player -->
-    <video id="my-video" class="video-js" controls preload="auto" data-setup='{}' poster="https://w0.peakpx.com/wallpaper/492/179/HD-wallpaper-loki-season-2-coming-loki-season-2-loki-tv-shows-superheroes-artist-artwork-digital-art-tom-hiddleston.jpg">
 
-      <!-- Video sources -->
-      <source src="https://raspy-rice-ca48.yoger81482.workers.dev/1396588980/efe7484eeac2190f5208bd0c5fa8b421d170c2c5e9f12b7709fcbb30fb3483d33e41622f5c1149509c63f7dd0a6bb29381a0aef76b05f02e360b2cbea6978a98d7fbd199980d458a2da02cc7df4280084ecfab20f6a76cca53100407c625eca23dc55c289cf229755a165f227e8ef6cee74cea8500673cd3cd9579b3d23c6250::d2b1f2c3919d5d7d0ac444b4f3de1bef/Loki.S02E01.Ouroboros.480p.DSNP.Hindi.English.Msubs.Vegamovies.to.mkv" type="video/mp4">
-      <!-- Subtitles (if any) -->
-      <track kind="subtitles" src="" srclang="en" label="English">
-      <track kind="subtitles" src="" srclang="es" label="Spanish">
-      <track kind="subtitles" src="" srclang="hi" label="Hindi">
-      <p class="vjs-no-js">
-          To view this video please enable JavaScript, and consider upgrading to a
-          web browser that
-          <a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
-      </p>
-  </video>
-    <a class="htkk" href="index.html">
-        <img src="Untitle1.png"  >
+    <video id="my-video" class="video-js" controls preload="auto" data-setup='{}' poster="https://w0.peakpx.com/wallpaper/492/179/HD-wallpaper-loki-season-2-coming-loki-season-2-loki-tv-shows-superheroes-artist-artwork-digital-art-tom-hiddleston.jpg">
+        <!-- Video sources -->
+        <source src="https://raspy-rice-ca48.yoger81482.workers.dev/1396588980/efe7484eeac2190f5208bd0c5fa8b421d170c2c5e9f12b7709fcbb30fb3483d33e41622f5c1149509c63f7dd0a6bb29381a0aef76b05f02e360b2cbea6978a98d7fbd199980d458a2da02cc7df4280084ecfab20f6a76cca53100407c625eca23dc55c289cf229755a165f227e8ef6cee74cea8500673cd3cd9579b3d23c6250::d2b1f2c3919d5d7d0ac444b4f3de1bef/Loki.S02E01.Ouroboros.480p.DSNP.Hindi.English.Msubs.Vegamovies.to.mkv" type="video/mp4">
+        <!-- Subtitles (if any) -->
+        <track kind="subtitles" src="" srclang="en" label="English">
+        <track kind="subtitles" src="" srclang="es" label="Spanish">
+        <track kind="subtitles" src="" srclang="hi" label="Hindi">
+        <p class="vjs-no-js">
+            To view this video please enable JavaScript, and consider upgrading to a
+            web browser that
+            <a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+        </p>
+        <a class="htkk" href="index.html" style="position: absolute; top: 10px; right: 10px;">
+            <img src="Untitle1.png" style="max-height: 30px; max-width: 30px;">
+        </a>
+    </video>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+        var videoPlayer = document.getElementById('my-video');
+        var htkkLink = document.createElement('a');
+        htkkLink.className = 'htkk';
+        htkkLink.href = 'index.html';
+        var htkkImg = document.createElement('img');
+        htkkImg.src = 'Untitle1.png';
        
-    </a>      
+     
+        htkkLink.appendChild(htkkImg);
+        videoPlayer.appendChild(htkkLink);
+    });
+    </script>
 <style>
 
 </style>
